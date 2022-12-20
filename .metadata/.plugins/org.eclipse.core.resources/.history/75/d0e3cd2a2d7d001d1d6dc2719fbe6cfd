@@ -1,0 +1,23 @@
+package com.example.demo.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+
+@AllArgsConstructor
+public class PropertyDTO {
+	
+	private String title;
+	private String description;
+	private String  ownerName;
+	private String ownerEmail;
+	private Double price;
+	private String address;
+	
+	
+	
+
+}

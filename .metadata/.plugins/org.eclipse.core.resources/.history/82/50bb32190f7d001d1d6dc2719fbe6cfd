@@ -1,0 +1,11 @@
+package ls.lesm.model;
+
+public enum UpdatedStatus {
+<<<<<<< HEAD
+	TRANSFER,RELEASE,PROMOTE,DEMOTE;
+
+=======
+	TRANSFER,RELEASE,PROMOTE,ABSCOND,TERMINATE,DEMOTE;
+	
+>>>>>>> chamu
+}

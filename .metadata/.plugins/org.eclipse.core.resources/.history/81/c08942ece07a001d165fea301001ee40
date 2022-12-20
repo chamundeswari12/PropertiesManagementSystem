@@ -1,0 +1,121 @@
+package ls.lesm.restcontroller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
+
+import ls.lesm.service.impl.EmployeeDetailsServiceImpl;
+
+@RestController
+
+
+
+@CrossOrigin("*")
+public class SchedularController {
+
+
+
+   @Autowired
+    private EmployeeDetailsServiceImpl employeeDetailsService;
+
+
+
+   @Autowired
+    private MasterEmployeeDetailsRepository masterEmployeeDetailsRepository;
+    @Autowired
+    private EmployeesAtClientsDetailsRepository employeesAtClientsDetailsRepository;
+
+
+
+   @GetMapping("/settingStatus")
+    public ResponseEntity<?> allEmpDetailsAtClient()
+    {
+        
+        //LocalDate l=null;
+
+
+
+       List<MasterEmployeeDetails> all = this.masterEmployeeDetailsRepository.findAll();
+        
+        for (MasterEmployeeDetails e : all)
+        {
+            
+                List<EmployeesAtClientsDetails> allClients  =  employeesAtClientsDetailsRepository.findsBymasterEmployeeDetails_Id(e.getEmpId());// u
+                     
+                //List<EmployeesAtClientsDetails> allClients  =  employeesAtClientsDetailsRepository.findByMasterEmployeeDetails(e);
+            
+          if (!allClients .isEmpty())
+    
+          {
+                    
+    //            System.out.println("am in if condition"+e.getEmpId());
+    //            
+    //            //  e.setStatus(EmployeeStatus.ACTIVE);
+    //                masterEmployeeDetailsRepository.save(e);
+    //                
+                    
+                    
+                for (EmployeesAtClientsDetails clients : allClients)
+                {
+                    
+                    if (clients.getPOEdate()==null||clients.getPOEdate().equals(LocalDate.now())||clients.getPOEdate().isAfter(LocalDate.now()))
+                    {
+                        e.setStatus(EmployeeStatus.ACTIVE);
+                        masterEmployeeDetailsRepository.save(e);
+                        break ;
+                        
+                    }
+                    
+                    else
+                    {
+                        e.setStatus(EmployeeStatus.BENCH);
+                        masterEmployeeDetailsRepository.save(e);
+                    }
+                    
+                    
+    //                for (EmployeesAtClientsDetails clients : allClients)
+    //                {    
+    //                
+    //                
+    //                
+    //                if (clients.getPOEdate()==null)
+    //                    {
+    //                    
+    //                             
+    //                        
+    //                    e.setStatus(EmployeeStatus.ACTIVE);
+    //                    this.masterEmployeeDetailsRepository.save(e);
+    //                    break;
+    //                    }
+    //                    
+    //                    
+    //                else if (clients.getPOEdate().isBefore(LocalDate.now()))
+    //                    
+    //                {
+    //                    e.setStatus(EmployeeStatus.BENCH);
+    //                    this.masterEmployeeDetailsRepository.save(e);
+    //
+    //                }
+    //                
+    //                
+    //                
+    //                else if(clients.getPOEdate().isAfter(LocalDate.now()))
+    //                {
+    //                    e.setStatus(EmployeeStatus.ACTIVE);
+    //                    this.masterEmployeeDetailsRepository.save(e);
+    //                    break;  
+    //                }
+    //
+    //            }
+            }
+        
+    
+        }
+         // return new ResponseEntity("Schedule suceesfully", HttpStatus.OK);
+    }
+        return new ResponseEntity(" Schedule suceesfully", HttpStatus.OK);    
+    }
+
+
+
+}

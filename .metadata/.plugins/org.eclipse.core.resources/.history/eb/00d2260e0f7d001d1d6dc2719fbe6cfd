@@ -1,0 +1,14 @@
+package  ls.lesm.model;
+
+public enum EmployeeStatus {
+<<<<<<< HEAD
+
+	BENCH,ACTIVE,EXIT,MANAGMENT,ABSCOND,TERMINATE;
+
+
+
+=======
+	BENCH,ACTIVE,EXIT,MANAGMENT,ABSCOND,TERMINATE;
+>>>>>>> chamu
+
+}

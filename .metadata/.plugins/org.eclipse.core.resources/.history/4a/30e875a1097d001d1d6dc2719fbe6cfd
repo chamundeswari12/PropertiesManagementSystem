@@ -1,0 +1,62 @@
+
+
+package ls.lesm.service.impl;
+
+@Service
+public class AbscondEmpServiceImpl {
+
+	@Autowired
+	private MasterEmployeeDetailsRepository masterEmployeeDetailsRepository;
+
+	@Autowired
+	ReleaseEmpDetailsRepository releaseEmpDetailsRepository;
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private HistoryRepository historyOfEmpRepository;
+
+	@Autowired
+	DesignationsRepository designationsRepository;
+
+	public List<Designations> GetAllDesignation() {
+		List<Designations> designations = designationsRepository.findAll();
+
+		return designations;
+	}
+
+	public List<MasterEmployeeDetails> GetEmp(int designation) {
+
+ 
+
+        List<MasterEmployeeDetails> masterEmployeeDetails = masterEmployeeDetailsRepository
+                .findBydesignations_Id(designation);
+
+ 
+
+        if (masterEmployeeDetails.isEmpty()) {
+
+ 
+
+            throw new RecordNotFoundException("No records are found");
+        } else {
+
+ 
+
+            List<MasterEmployeeDetails> filter = new ArrayList<MasterEmployeeDetails>();
+
+ 
+
+            for (MasterEmployeeDetails m : masterEmployeeDetails) {
+                if (m.getStatus() != EmployeeStatus.EXIT && m.getStatus() != EmployeeStatus.ABSCONDED
+&& m.getStatus() != EmployeeStatus.TERMINATED) {
+                    filter.add(m);
+                }
+
+ 
+
+            }
+            return filter;
+        }
+    }
